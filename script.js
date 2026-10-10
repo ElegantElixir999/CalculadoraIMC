@@ -1,44 +1,93 @@
-document.getElementById('imc-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
+    const calculateBtn = document.getElementById('calculate-btn');
+    const resultStatus = document.getElementById('result-status');
+    const resultDescription = document.getElementById('result-description');
+    const resultEmoji = document.getElementById('result-emoji');
+    const bountyNumber = document.getElementById('bounty-number');
+    const scaleItems = document.querySelectorAll('.scale-item');
 
-    const pesoInput = document.getElementById('peso').value;
-    const alturaInput = document.getElementById('altura').value;
+    function calculateBMI() {
+        let weight = parseFloat(weightInput.value);
+        let height = parseFloat(heightInput.value);
 
-    const peso = parseFloat(pesoInput);
-    const altura = parseFloat(alturaInput);
+        if (!weight || !height || weight <= 0 || height <= 0) {
+            alert("Por favor, insira valores válidos para peso e altura!");
+            return;
+        }
 
-    if (!peso || !altura || peso <= 0 || altura <= 0) {
-        alert('Por favor, insira valores válidos para peso e altura.');
-        return;
+        // Se o usuário inseriu altura em centímetros (ex: 178 ao invés de 1.78), converte automaticamente
+        if (height > 3) {
+            height = height / 100;
+        }
+
+        const bmi = weight / (height * height);
+        updateUI(bmi);
     }
 
-    // Cálculo do IMC: Peso / (Altura * Altura)
-    const imc = peso / (altura * altura);
-    const imcArredondado = imc.toFixed(2);
+    function updateUI(bmi) {
+        let status = "";
+        let description = "";
+        let emoji = "";
+        let bounty = "";
+        let activeIndex = 1;
 
-    let classificacao = '';
+        if (bmi < 18.5) {
+            status = `Abaixo do Peso (${bmi.toFixed(1)})`;
+            description = "Estilo Brook. Seu corpo está leve como a brisa dos mares, mas cuidado para não ser levado por uma tempestade!";
+            emoji = "🦴";
+            bounty = "15,000,000";
+            activeIndex = 0;
+        } else if (bmi >= 18.5 && bmi < 25) {
+            status = `Peso Normal (${bmi.toFixed(1)})`;
+            description = "Estilo Luffy / Zoro. Condicionamento físico ideal para enfrentar qualquer Almirante na Grand Line!";
+            emoji = "💪";
+            bounty = "300,000,000";
+            activeIndex = 1;
+        } else if (bmi >= 25 && bmi < 30) {
+            status = `Sobrepeso (${bmi.toFixed(1)})`;
+            description = "Estilo Tanque / Jinbe. Força bruta impressionante acumulada para resistir a fortes impactos!";
+            emoji = "🛡️";
+            bounty = "500,000,000";
+            activeIndex = 2;
+        } else {
+            status = `Obesidade (${bmi.toFixed(1)})`;
+            description = "Estilo Yonkou em Bulk. Poder e massa avassaladores comparáveis aos maiores imperadores do Novo Mundo!";
+            emoji = "👑";
+            bounty = "1,500,000,000";
+            activeIndex = 3;
+        }
 
-    if (imc < 18.5) {
-        classificacao = 'Abaixo do peso';
-    } else if (imc >= 18.5 && imc < 25) {
-        classificacao = 'Peso normal (Eutrofia)';
-    } else if (imc >= 25 && imc < 30) {
-        classificacao = 'Sobrepeso';
-    } else if (imc >= 30 && imc < 35) {
-        classificacao = 'Obesidade Grau I';
-    } else if (imc >= 35 && imc < 40) {
-        classificacao = 'Obesidade Grau II';
-    } else {
-        classificacao = 'Obesidade Grau III (Mórbida)';
+        resultStatus.textContent = status;
+        resultDescription.textContent = description;
+        resultEmoji.textContent = emoji;
+        bountyNumber.textContent = bounty;
+
+        // Atualizar destaque na escala inferior
+        scaleItems.forEach((item, index) => {
+            if (index === activeIndex) {
+                item.classList.add('active-range');
+            } else {
+                item.classList.remove('active-range');
+            }
+        });
     }
 
-    // Exibindo os resultados na tela
-    const resultadoDiv = document.getElementById('resultado');
-    const valorImcP = document.getElementById('valor-imc');
-    const classificacaoP = document.getElementById('classificacao');
+    window.fillPreset = function(weight, height) {
+        weightInput.value = weight;
+        heightInput.value = height;
+        calculateBMI();
+    };
 
-    valorImcP.textContent = `Seu IMC é: ${imcArredondado}`;
-    classificacaoP.textContent = `Classificação: ${classificacao}`;
+    calculateBtn.addEventListener('click', calculateBMI);
 
-    resultadoDiv.classList.remove('hidden');
+    // Permitir cálculo ao pressionar Enter nos inputs
+    [weightInput, heightInput].forEach(input => {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                calculateBMI();
+            }
+        });
+    });
 });

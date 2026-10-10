@@ -3,35 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de IMC</title>
+    <title>Government of the World - Marines | Calculadora IMC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="container">
-        <h1>Calculadora de IMC</h1>
-        <p class="subtitle">Descubra o seu Índice de Massa Corporal</p>
 
-        <form id="imc-form">
-            <div class="input-group">
-                <label for="peso">Peso (kg)</label>
-                <input type="number" id="peso" step="0.1" placeholder="Ex: 70.0" required>
+    <header class="header-banner">
+        <h1>GOVERNMENT OF THE WORLD · MARINES</h1>
+        <p>"CONHEÇA O TEOR DE SUA RECOMPENSA E A SUA FORÇA FÍSICA NA GRAND LINE"</p>
+    </header>
+
+    <main class="main-container">
+        <div class="wanted-poster">
+            <div class="poster-header">
+                <span>GRAND LINE EDITION</span>
+                <span>• SÉRIE IMC-OP-01 •</span>
+                <span>RECOMPENSA IMPERIAL</span>
+            </div>
+            
+            <h2 class="wanted-title">WANTED</h2>
+            <p class="wanted-subtitle">SEU IMC NA MIRA DA MARINHA!</p>
+
+            <div class="content-grid">
+                <!-- Coluna do Formulário -->
+                <section class="form-section">
+                    <div class="section-card">
+                        <h3>📜 Ficha do Pirata</h3>
+                        
+                        <div class="input-group">
+                            <label for="weight">⚖️ PESO CORPORAL (KG):</label>
+                            <div class="input-field-wrapper">
+                                <span class="prefix">KG</span>
+                                <input type="number" id="weight" placeholder="Ex: 75.5" step="0.1" min="1">
+                            </div>
+                            <span class="input-hint">Aferido pela balança de Water 7</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="height">📏 ESTATURA / ALTURA (METROS OU CM):</label>
+                            <div class="input-field-wrapper">
+                                <span class="prefix">M</span>
+                                <input type="number" id="height" placeholder="Ex: 1.78 ou 178" step="0.01" min="0.1">
+                            </div>
+                            <span class="input-hint">Medição sem o chapéu de palha</span>
+                        </div>
+
+                        <div class="presets-group">
+                            <span class="presets-label">TESTAR COM PERSONAGENS:</span>
+                            <div class="preset-buttons">
+                                <button type="button" class="preset-btn" onclick="fillPreset(64, 1.74)">🏴‍☠️ Luffy (64kg/1.74m)</button>
+                                <button type="button" class="preset-btn" onclick="fillPreset(56, 2.77)">🏴‍☠️ Brook (56kg/2.77m)</button>
+                                <button type="button" class="preset-btn" onclick="fillPreset(86, 1.81)">🏴‍☠️ Zoro (86kg/1.81m)</button>
+                                <button type="button" class="preset-btn" onclick="fillPreset(160, 3.01)">🏴‍☠️ Jinbe (160kg/3.01m)</button>
+                            </div>
+                        </div>
+
+                        <button type="button" id="calculate-btn" class="action-btn">
+                            ⚔️ ZARPAR & CALCULAR! 🧭
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Coluna de Resultado -->
+                <section class="result-section">
+                    <div id="result-card" class="result-card unknown">
+                        <div class="avatar-box">
+                            <span id="result-emoji">💀</span>
+                        </div>
+                        <h3 id="result-status">Agente Desconhecido</h3>
+                        <p id="result-description">Insira o peso e altura para a Marinha calcular seu nível de ameaça física e recompensa oficial!</p>
+                    </div>
+
+                    <div class="bounty-box">
+                        <span>RECOMPENSA ESTIMADA DA MARINHA</span>
+                        <div class="bounty-value">
+                            <span class="currency">฿</span> <span id="bounty-number">30,000,000</span> <span class="unit">BERRIES</span>
+                        </div>
+                        <p class="bounty-footer">* DEAD OR ALIVE • Calculado pela proximidade com o condicionamento do Novo Mundo</p>
+                    </div>
+                </section>
             </div>
 
-            <div class="input-group">
-                <label for="altura">Altura (m)</label>
-                <input type="number" id="altura" step="0.01" placeholder="Ex: 1.75" required>
-            </div>
-
-            <button type="submit" id="btn-calcular">Calcular</button>
-        </form>
-
-        <div id="resultado" class="hidden">
-            <h2>Resultado</h2>
-            <p id="valor-imc"></p>
-            <p id="classificacao"></p>
+            <!-- Escala Oficial dos Mares -->
+            <footer class="scale-footer">
+                <h4>ESCALA OFICIAL DOS MARES (CLASSIFICAÇÃO OMS X GRAND LINE)</h4>
+                <div class="scale-grid">
+                    <div class="scale-item">
+                        <strong>< 18.5: Esqueleto</strong>
+                        <span>Estilo Brook (Subnutrido)</span>
+                    </div>
+                    <div class="scale-item active-range">
+                        <strong>18.5 – 24.9: Em Forma</strong>
+                        <span>Estilo Luffy / Zoro</span>
+                    </div>
+                    <div class="scale-item">
+                        <strong>25.0 – 29.9: Tanque</strong>
+                        <span>Estilo Jinbe / Oficial</span>
+                    </div>
+                    <div class="scale-item">
+                        <strong>≥ 30.0: Yonkou em Bulk</strong>
+                        <span>Estilo Big Mom / Kaido</span>
+                    </div>
+                </div>
+                <div class="footer-bottom-text">
+                    MARINE HQ • FLEET ADMIRAL AKAINU &nbsp;&nbsp;&nbsp;&nbsp; KAIZOKU OU NI ORE WA NARU! 🏴‍☠️ &nbsp;&nbsp;&nbsp;&nbsp; IMPOSTOS DA MARINHA PAGOS
+                </div>
+            </footer>
         </div>
     </main>
 
-    <script src="scripts.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
